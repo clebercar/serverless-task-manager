@@ -1,0 +1,28 @@
+service: task-manager
+
+frameworkVersion: '2'
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+
+package:
+  individually: true
+
+custom:
+  webpack:
+    packager: npm
+    includeModules: true
+
+functions:
+  app:
+    handler: src/lambda.handler
+    events:
+      - httpApi:
+          path: '/{proxy+}'
+          method: '*'
